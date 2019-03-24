@@ -38,7 +38,7 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-              <Header {...this.props} />
+              
         <Button title="Show me more of the app" onPress={this._showMoreApp} />
         <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
       </View>

@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableHighlight, Image ,Button} from 'react-native';
-//import { Header } from './header';
+import { View, Text, TouchableHighlight, Image } from 'react-native';
+import { Header } from './Header';
 
-export class SignInScreen extends Component {
-
-  _signUpAsync = async () => {
-
-    this.props.navigation.navigate('Home');
-  };
+export class HomeScreen extends Component {
 
     render() {
         return (<View style={{
             flex: 1,
             flexDirection: 'column',
         }}> 
-        
+        <Header {...this.props} />
             <View style={{
                 flex: 1,
                 backgroundColor: 'steelblue',   
@@ -22,9 +17,8 @@ export class SignInScreen extends Component {
                 justifyContent: 'center'
             }}>
                 <Text style={{ fontSize: 30, color: 'white' }}>
-                    Login here
+                    I am home
                 </Text>
-                <Button title="Home" onPress={this._signUpAsync} />
                 
             </View>
         </View>);
