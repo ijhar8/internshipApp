@@ -4,47 +4,55 @@ import {
     StyleSheet,
     Text,
     View,
-    TouchableOpacity,
     Image,
-    Alert,
     ScrollView,
+    TouchableOpacity,
+    ListView,
     FlatList,
     TouchableHighlight,
-    Button
+
   } from 'react-native';
+  
+  
 
-import { Header } from './Header';
-//import { TouchableHighlight } from 'react-native-gesture-handler';
-
-export class HomeScreen extends Component {
+export class MovieDetails extends Component {
 
     constructor(props) {
         super(props);
+        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-          data: [
-            {id:'1', title: "movie1",         image:"https://lorempixel.com/400/200/nature/6/", description:"description"},
-            {id:'2', title: "movie2",         image:"https://lorempixel.com/400/200/nature/5/", description:"description"} ,
-            {id:'3', title: "movie3",         image:"https://lorempixel.com/400/200/nature/4/", description:"description"}, 
-            {id:'4', title: "movie4",         image:"https://lorempixel.com/400/200/nature/6/", description:"description"}, 
-            {id:'5', title: "movie5",         image:"https://lorempixel.com/400/200/sports/1/", description:"description"}, 
-            {id:'6', title: "movie6",         image:"https://lorempixel.com/400/200/nature/8/", description:"description"}, 
-            {id:'7', title: "movie7",         image:"https://lorempixel.com/400/200/nature/1/", description:"description"}, 
-            {id:'8', title: "movie8",         image:"https://lorempixel.com/400/200/nature/3/", description:"description"},
-            {id:'9', title: "movie9",         image:"https://lorempixel.com/400/200/nature/4/", description:"description"},
-          ]
+          data:[
+            { id:'1', image: "https://png.icons8.com/voice-recognition/color/40", title:"Comment1"},
+            { id:'2', image: "https://png.icons8.com/voice-recognition/color/40", title:"Comment"},
+            { id:'3', image: "https://png.icons8.com/voice-recognition/color/40", title:"Comment"},
+            { id:'4', image: "https://png.icons8.com/voice-recognition/color/40", title:"Comment"},
+            { id:'5', image: "https://png.icons8.com/voice-recognition/color/40", title:"Comment"},
+            { id:'6', image: "https://png.icons8.com/voice-recognition/color/40", title:"Comment"},
+            { id:'7', image: "https://png.icons8.com/voice-recognition/color/40", title:"Comment"},
+            { id:'8', image: "https://png.icons8.com/voice-recognition/color/40", title:"Comment"},
+            { id:'9', image: "https://png.icons8.com/voice-recognition/color/40", title:"Comment"},
+            { id:'10', image: "https://png.icons8.com/voice-recognition/color/40", title:"Comment"},
+          ],
         };
       }
+  static navigationOptions = {
+    drawerLabel: () => null
+   }
 
-      clickEventListener =  (param) => {
-//    alert(param)
 
-       this.props.navigation.navigate('MovieDetails',{ item: param });
-      };
+ 
 
     render() {
-        return (<View style={styles.container}>
-                   <Header {...this.props} />
-          
+        const  item = this.props.navigation.state.params.item
+        return (     
+            <View style={styles.container}>
+            <View style={styles.header}>
+              <View style={styles.headerContent}>
+                  <Image style={styles.avatar} source={{uri: item.image }}/>
+                  <Text style={styles.name}>{item.title}</Text>
+              </View>
+            </View>
+            
             <FlatList style={styles.list}
               data={this.state.data}
               keyExtractor= {(item) => {
@@ -58,14 +66,12 @@ export class HomeScreen extends Component {
               renderItem={(post) => {
                 const item = post.item;
                 return (
-                    <TouchableHighlight onPress={() => {this.clickEventListener(item)}} >
+                    <TouchableHighlight >
                   <View style={styles.card}>
                  
-                    <Image style={styles.cardImage} source={{uri:item.image}}/>
                     <View style={styles.cardHeader}>
                       <View>
                         <Text style={styles.title}>{item.title}</Text>
-                        <Text style={styles.description}>{item.description}</Text>
                         
                       </View>
                     </View>
@@ -75,17 +81,43 @@ export class HomeScreen extends Component {
 
                 )
               }}/>
-          </View>);
+        </View>
+   );
     }
 
 }
 
 
+
 const styles = StyleSheet.create({
     container:{
-      flex:1,
-      
+        flex:1,
+        
+      },
+    header:{
+      backgroundColor: "skyblue",
     },
+    headerContent:{
+      padding:30,
+      alignItems: 'center',
+    },
+
+    avatar: {
+      width: 250,
+      height: 230,
+      
+      borderWidth: 4,
+      borderColor: "#FF6347",
+      marginBottom:10,
+    },
+   
+    username:{
+      color: "#20B2AA",
+      fontSize:22,
+      alignSelf:'center',
+      marginLeft:10
+    },
+
     list: {
       paddingHorizontal: 17,
       backgroundColor:"#4682b4",
@@ -183,4 +215,6 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     }
+  
   }); 
+  

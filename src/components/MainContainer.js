@@ -6,6 +6,8 @@ import {
   StatusBar,
   StyleSheet,
   View,
+  TouchableHighlight,
+  Text,
 } from 'react-native';
 import { createStackNavigator, createSwitchNavigator, createAppContainer ,createDrawerNavigator} from 'react-navigation';
 import { Header } from './Header';
@@ -13,8 +15,11 @@ import { SignInScreen } from './LoginComponent';
 import { SignUpScreen } from './RegisterComponent';
 import { HomeScreen } from './HomeScreen';
 import { ProfileScreen } from './ProfileScreen';
+import { MovieDetails } from './MovieDetails';
+
 
 class AuthScreen extends React.Component {
+
   static navigationOptions = {
     title: 'login/register',
   };
@@ -22,8 +27,15 @@ class AuthScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button title="Sign in!" onPress={this._signInAsync} />
-        <Button title="Sign Up!" onPress={this._signUpAsync} />
+       
+        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={this._signInAsync}>
+          <Text style={styles.loginText}>Login</Text>
+        </TouchableHighlight>
+        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={this._signUpAsync}>
+          <Text style={styles.loginText}>Register</Text>
+        </TouchableHighlight>
+      
+
       </View>
     );
   }
@@ -119,26 +131,55 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  buttonContainer: {
+    height:45,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom:20,
+    width:250,
+    borderRadius:30,
+  },
+  loginButton: {
+    backgroundColor: "#00b5ec",
+  },
+  loginText: {
+    color: 'white',
+  }
 });
 
 const AppStack = createDrawerNavigator(
   {
      Home: HomeScreen,
-     Profile: ProfileScreen 
+     Profile: ProfileScreen,
+     MovieDetails: MovieDetails,
+
+
+
   });
 const AuthStack = createStackNavigator(
   {
      MainAuth: AuthScreen ,
      SignUp:SignUpScreen,
      SignIn:SignInScreen,
+
      
   });
+// const OtherStack = createStackNavigator(
+//     {
+//        MovieDetails: MovieDetails,
+       
+       
+//     });
+  
+  
 
 export default createAppContainer(createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
     App: AppStack,
     Auth: AuthStack,
+   
   },
   {
     initialRouteName: 'AuthLoading',

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableHighlight, Image } from 'react-native';
 //import { Ionicons } from '@expo/vector-icons';
+//import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 
@@ -8,15 +9,19 @@ import { View, Text, TouchableHighlight, Image } from 'react-native';
 export  class Header extends Component {
     render() {
         return (<View style={{
-            height: 70,
+            height: 50,
             flexDirection: 'row',
             justifyContent: 'flex-start',
             alignItems: 'center',
             backgroundColor: 'skyblue'
         }}>
-            <TouchableHighlight style={{ marginLeft: 10, marginTop: 15 }}
+            <TouchableHighlight style={{ marginLeft: 10, marginTop: 5 }}
                 onPress={() => { this.props.navigation.openDrawer() }}>
-                <Text>menu</Text>
+            
+                <Image
+                       source={require('../assets/drawer.png')}
+                       style={{ height: 25, width : 25 }}
+                   />
             </TouchableHighlight>
         </View>);
     }
