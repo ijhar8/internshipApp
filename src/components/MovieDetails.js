@@ -10,6 +10,9 @@ import {
     ListView,
     FlatList,
     TouchableHighlight,
+    KeyboardAvoidingView,
+    TextInput,
+    Platform  
 
   } from 'react-native';
   
@@ -22,7 +25,7 @@ export class MovieDetails extends Component {
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
           data:[
-            { id:'1', image: "https://png.icons8.com/voice-recognition/color/40", title:"Comment1"},
+            { id:'1', image: "https://png.icons8.com/voice-recognition/color/40", title:"Comment1" ,likes:1},
             { id:'2', image: "https://png.icons8.com/voice-recognition/color/40", title:"Comment"},
             { id:'3', image: "https://png.icons8.com/voice-recognition/color/40", title:"Comment"},
             { id:'4', image: "https://png.icons8.com/voice-recognition/color/40", title:"Comment"},
@@ -44,15 +47,31 @@ export class MovieDetails extends Component {
 
     render() {
         const  item = this.props.navigation.state.params.item
-        return (     
+        return (   
+<KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : null}
+                style={{ flex: 1 }}
+            >
             <View style={styles.container}>
+            <View style={styles.inner}>
+
             <View style={styles.header}>
               <View style={styles.headerContent}>
                   <Image style={styles.avatar} source={{uri: item.image }}/>
                   <Text style={styles.name}>{item.title}</Text>
               </View>
+
+              <View style={styles.socialBarSection2}>
+                      <TouchableOpacity style={styles.socialBarButton}>
+                        <Image style={styles.icon} source={{uri: 'https://png.icons8.com/ios-glyphs/75/2ecc71/comments.png'}}/>
+                      </TouchableOpacity>
+              </View>
             </View>
-            
+            <TextInput style={styles.inputs}
+                  placeholder="full-name"
+                  underlineColorAndroid='transparent'
+                  onChangeText={(name) => this.setState({name})}/>
+
             <FlatList style={styles.list}
               data={this.state.data}
               keyExtractor= {(item) => {
@@ -66,7 +85,7 @@ export class MovieDetails extends Component {
               renderItem={(post) => {
                 const item = post.item;
                 return (
-                    <TouchableHighlight >
+                  <TouchableHighlight >
                   <View style={styles.card}>
                  
                     <View style={styles.cardHeader}>
@@ -75,13 +94,21 @@ export class MovieDetails extends Component {
                         
                       </View>
                     </View>
- 
+                    <View style={styles.socialBarSection}>
+                      <TouchableOpacity style={styles.socialBarButton}>
+                        <Image style={styles.icon} source={{uri: 'https://png.icons8.com/color/50/000000/hearts.png'}}/>
+                        <Text style={styles.socialBarLabel}>{item.likes}</Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
                   </TouchableHighlight>
 
                 )
               }}/>
+              </View >
+
         </View>
+        </KeyboardAvoidingView>
    );
     }
 
@@ -103,7 +130,7 @@ const styles = StyleSheet.create({
     },
 
     avatar: {
-      width: 250,
+      width: 300,
       height: 230,
       
       borderWidth: 4,
@@ -201,9 +228,18 @@ const styles = StyleSheet.create({
       flex: 1
     },
     socialBarSection: {
-      justifyContent: 'center',
+      justifyContent: 'flex-end',
       flexDirection: 'row',
       flex: 1,
+      padding:5
+    },
+    socialBarSection2: {
+      justifyContent: 'flex-end',
+      flexDirection: 'row',
+      flex: 1,
+      padding:10,
+      marginRight: 20,
+     
     },
     socialBarlabel: {
       marginLeft: 8,
@@ -214,7 +250,11 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-    }
+    },
+    inner: {
+      flex: 1,
+      justifyContent: "flex-end",
+  },
   
   }); 
   
